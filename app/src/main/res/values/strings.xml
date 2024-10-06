@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">729</string>
+    <string name="s3">3</string>
+    <string name="s9">9</string>
+    <string name="s27">27</string>
+    <string name="s81">81</string>
+    <string name="s243">243</string>
+    <string name="s729">729</string>
+    <string name="s2187">2187</string>
+    <string name="s6561">6561</string>
+    <string name="four">4x4</string>
+    <string name="five">5x5</string>
+    <string name="unchoose">UN-CHOOSE</string>
+</resources>
