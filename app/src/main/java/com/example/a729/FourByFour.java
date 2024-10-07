@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 public class FourByFour extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     private GestureDetector gestureDetector;
-
+    public int animCount;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -499,10 +498,12 @@ public class FourByFour extends AppCompatActivity implements GestureDetector.OnG
         }
         if (!animations.isEmpty()) {
             animatorSet.playTogether(animations);
+            animCount = animations.size();
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if (add)
+                    animCount--;
+                    if (add && animCount == 0)
                         addTile(tiles, tb, width);
                 }
             });

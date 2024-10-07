@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class FiveByFive extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     private GestureDetector gestureDetector;
-
+    public int animCount;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -491,10 +491,12 @@ public class FiveByFive extends AppCompatActivity implements GestureDetector.OnG
         }
         if (!animations.isEmpty()) {
             animatorSet.playTogether(animations);
+            animCount = animations.size();
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if (add)
+                    animCount--;
+                    if (add && animCount == 0)
                         addTile(tiles, tb, width);
                 }
             });
