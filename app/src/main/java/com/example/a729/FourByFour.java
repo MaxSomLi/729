@@ -25,7 +25,6 @@ import java.util.ArrayList;
 public class FourByFour extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     private GestureDetector gestureDetector;
-    public int animCount;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -143,7 +142,7 @@ public class FourByFour extends AppCompatActivity implements GestureDetector.OnG
             }
         }
         for (int j = 0; j < 4; j++) {
-            for (int i = 3; i > 1; i--) {
+            for (int i = 0; i < 2; i++) {
                 if (t.tilesOnBoard[i][j] != null && t.tilesOnBoard[i + 1][j] != null && t.tilesOnBoard[i + 2][j] != null) {
                     num = (String) t.tilesOnBoard[i][j].getText();
                     if (t.tilesOnBoard[i + 1][j].getText() == num && t.tilesOnBoard[i + 2][j].getText() == num) {
@@ -484,11 +483,11 @@ public class FourByFour extends AppCompatActivity implements GestureDetector.OnG
                 if (tb[i][j] != null) {
                     xd = (int) (Math.abs(tb[i][j].getTranslationX() - width * j) / width);
                     yd = (int) (Math.abs(tb[i][j].getTranslationY() - width * i) / width);
-                    if (xd != 0) {
+                    if (xd > 0) {
                         ObjectAnimator animator = ObjectAnimator.ofFloat(tb[i][j], "translationX", width * j);
                         animator.setDuration(50 * xd);
                         animations.add(animator);
-                    } else if (yd != 0) {
+                    } else if (yd > 0) {
                         ObjectAnimator animator = ObjectAnimator.ofFloat(tb[i][j], "translationY", width * i);
                         animator.setDuration(50 * yd);
                         animations.add(animator);
@@ -498,12 +497,18 @@ public class FourByFour extends AppCompatActivity implements GestureDetector.OnG
         }
         if (!animations.isEmpty()) {
             animatorSet.playTogether(animations);
-            animCount = animations.size();
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    animCount--;
-                    if (add && animCount == 0)
+                    for (int i = 0; i < 4; i++) {
+                        for (int j = 0; j < 4; j++) {
+                            if (tb[i][j] != null) {
+                                tb[i][j].setTranslationX(width*j);
+                                tb[i][j].setTranslationY(width*i);
+                            }
+                        }
+                    }
+                    if (add)
                         addTile(tiles, tb, width);
                 }
             });
