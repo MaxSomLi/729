@@ -223,5 +223,6 @@
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="1:1"
         android:textColor="@color/text"
+        android:textSize="10sp"
         android:backgroundTint="@color/c3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
